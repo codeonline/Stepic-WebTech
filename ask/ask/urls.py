@@ -3,11 +3,11 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-# Добавьте в urls.py  маршрут для следующих URL
+#
 # /
 # /login/
 # /signup/
-# /question/<123>/    # вместо <123> - произвольный ID
+# /question/<123>/    
 # /ask/
 # /popular/
 # /new/
