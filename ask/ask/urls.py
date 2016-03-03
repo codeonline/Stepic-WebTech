@@ -7,7 +7,7 @@ admin.autodiscover()
 # /
 # /login/
 # /signup/
-# /question/<123>/    
+# /question/<123>/
 # /ask/
 # /popular/
 # /new/
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^/', 'ask.views.test', name='test'),
+    url(r'^', 'ask.views.test', name='test'),
     url(r'^login/', 'ask.views.test', name='test'),
     url(r'^signup/', 'ask.views.test', name='test'),
     url(r'^question/\d+', 'ask.views.test', name='test'),
