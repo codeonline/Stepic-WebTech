@@ -17,12 +17,12 @@ urlpatterns = patterns('',
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^', 'ask.views.test', name='test'),
-    url(r'^login/', 'ask.views.test', name='test'),
-    url(r'^signup/', 'ask.views.test', name='test'),
-    url(r'^question/\d+', 'ask.views.test', name='test'),
-    url(r'^ask/', 'ask.views.test', name='test'),
-    url(r'^popular/', 'ask.views.test', name='test'),
-    url(r'^new/', 'ask.views.test', name='test')
+    url(r'^', 'qa.views.test', name='test'),
+    url(r'^login/', 'qa.views.test', name='test'),
+    url(r'^signup/', 'qa.views.test', name='test'),
+    url(r'^question/\d+', 'qa.views.test', name='test'),
+    url(r'^ask/', 'qa.views.test', name='test'),
+    url(r'^popular/', 'qa.views.test', name='test'),
+    url(r'^new/', 'qa.views.test', name='test')
 )
 
