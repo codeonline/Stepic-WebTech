@@ -83,6 +83,7 @@ STATIC_URL = '/static/'
 
 # Custom settings
 #try:
-from local_settings import *
+#from local_settings import *
 #except ImportError:
 #    pass
+INSTALLED_APPS = ('qa',) + tuple(INSTALLED_APPS)

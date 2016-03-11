@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -11,12 +12,12 @@ from django.contrib.auth.models import User
 # author - автор вопроса
 # likes - список пользователей, поставивших "лайк"
 class Question(models.Model):
-    title = models.charField()
-    text = models.charField()
-    added_at = models.dateField()
-    rating = models.integerField()
+    title = models.CharField()
+    text = models.CharField()
+    added_at = models.DateField()
+    rating = models.IntegerField()
     author = models.OneToOneField(User)
-    likes = models.charField()
+    likes = models.CharField()
 
 
 # Answer - ответ
@@ -25,9 +26,9 @@ class Question(models.Model):
 # question - вопрос, к которому относится ответ
 # author - автор ответа
 class Answer(models.Model):
-    text = models.charField()
-    added_at = models.dateField()
-    question = models.charField()
+    text = models.CharField()
+    added_at = models.DateField()
+    question = models.CharField()
     author = models.OneToOneField(User)
 
 
