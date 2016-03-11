@@ -82,7 +82,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Custom settings
-try:
-    from qa.local_settings import *
-except ImportError:
-    pass
+#try:
+from local_settings import *
+#except ImportError:
+#    pass
