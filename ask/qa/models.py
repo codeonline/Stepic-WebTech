@@ -12,12 +12,12 @@ from django.contrib.auth.models import User
 # author - автор вопроса
 # likes - список пользователей, поставивших "лайк"
 class Question(models.Model):
-    title = models.CharField()
-    text = models.CharField()
+    title = models.CharField(max_length=255)
+    text = models.CharField(max_length=255)
     added_at = models.DateField()
     rating = models.IntegerField()
     author = models.OneToOneField(User)
-    likes = models.CharField()
+    likes = models.CharField(max_length=255)
 
 
 # Answer - ответ
@@ -26,9 +26,9 @@ class Question(models.Model):
 # question - вопрос, к которому относится ответ
 # author - автор ответа
 class Answer(models.Model):
-    text = models.CharField()
+    text = models.CharField(max_length=255)
     added_at = models.DateField()
-    question = models.CharField()
+    question = models.CharField(max_length=255)
     author = models.OneToOneField(User)
 
 
