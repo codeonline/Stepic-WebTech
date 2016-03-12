@@ -1,8 +1,11 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
 
 # Create your models here.
+
 
 # Question - вопрос
 # title - заголовок вопроса
@@ -19,6 +22,12 @@ class Question(models.Model):
     author = models.OneToOneField(User)
     likes = models.CharField(max_length=255)
 
+    def get_url(self):
+        return reverse('qa:question', kwargs={'id': self.id})
+
+    def __unicode__(self):
+        return self.title
+
 
 # Answer - ответ
 # text - текст ответа
@@ -28,7 +37,7 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.CharField(max_length=255)
     added_at = models.DateField()
-    question = models.CharField(max_length=255)
+    question = models.ForeignKey(Question)
     author = models.OneToOneField(User)
 
 
