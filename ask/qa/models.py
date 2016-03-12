@@ -17,7 +17,7 @@ from django.core.urlresolvers import reverse
 class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.CharField(max_length=255)
-    added_at = models.DateField(blank=True)
+    added_at = models.DateField(auto_now_add=True)
     rating = models.IntegerField(blank=True)
     author = models.OneToOneField(User)
     likes = models.CharField(max_length=255)
@@ -36,7 +36,7 @@ class Question(models.Model):
 # author - автор ответа
 class Answer(models.Model):
     text = models.CharField(max_length=255)
-    added_at = models.DateField(blank=True)
+    added_at = models.DateField(auto_now_add=True)
     question = models.ForeignKey(Question)
     author = models.OneToOneField(User)
 
