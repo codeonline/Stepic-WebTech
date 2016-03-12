@@ -19,7 +19,7 @@ class Question(models.Model):
     text = models.CharField(max_length=255)
     added_at = models.DateField(auto_now_add=True)
     rating = models.IntegerField(blank=True)
-    author = models.OneToOneField(User)
+    author = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     likes = models.CharField(max_length=255)
 
     def get_url(self):
@@ -38,7 +38,7 @@ class Answer(models.Model):
     text = models.CharField(max_length=255)
     added_at = models.DateField(auto_now_add=True)
     question = models.ForeignKey(Question)
-    author = models.OneToOneField(User)
+    author = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
 
 
 
