@@ -28,7 +28,7 @@ def test(request, *args, **kwargs):
 @require_GET
 def main_page(request):
     questions = Question.objects.all()
-    questions.order_by('-added_at')
+    questions.order_by('-added_at')   
     limit = 10
     paginator = Paginator(questions, limit)
 
