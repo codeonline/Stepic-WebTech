@@ -27,8 +27,8 @@ def test(request, *args, **kwargs):
 
 @require_GET
 def main_page(request):
-    questions = Question.objects.all()
-    questions.order_by('-added_at')   
+    questions = Question.objects.order_by('-added_at').all()
+    #questions.order_by('-added_at')   
     limit = 10
     paginator = Paginator(questions, limit)
 
@@ -59,8 +59,8 @@ def main_page(request):
 # ссылки на страницы отдельных вопросов.
 @require_GET
 def popular(request):
-    questions = Question.objects.all()
-    questions.order_by('-rating')
+    questions = Question.objects.order_by('-rating').all()
+    #questions.order_by('-rating')
     limit = 10
     paginator = Paginator(questions, limit)
 
