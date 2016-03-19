@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'ask.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
- DATABASES = {
+DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.sqlite3',
          'NAME': os.path.join(BASE_DIR, 'ask.db'),
