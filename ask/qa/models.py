@@ -20,10 +20,10 @@ class Question(models.Model):
     added_at = models.DateField(auto_now_add=True)
     rating = models.IntegerField(blank=True)
     author = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    likes = models.ManyToManyField(User)
+    likes = models.ManyToManyField(User, related_name='likes')
 
     def get_url(self):
-        return reverse('qa:question', kwargs={'id': self.id})
+        return reverse('question', kwargs={'id': self.id})
 
     def __unicode__(self):
         return self.title

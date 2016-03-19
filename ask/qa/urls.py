@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-#from ask.qa.views import *
+#from qa.views import *
 
 #
 # /
@@ -10,16 +10,16 @@ from django.conf.urls import patterns, include, url
 # /popular/
 # /new/
 
-urlpatterns = patterns('',
+urlpatterns = patterns('qa.views',
     # Examples:
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'views.main_page', name='main_page'),
-    url(r'^login/', 'views.test', name='test'),
-    url(r'^signup/', 'views.test', name='test'),
-    url(r'^question/(?P<id>\d+)/', 'views.question', name='question'),
-    url(r'^ask/', 'views.test', name='test'),
-    url(r'^popular/', 'views.popular', name='popular'),
-    url(r'^new/', 'views.test', name='test'),
+    url(r'^$', 'main_page', name='main_page'),
+     url(r'^login/', 'test', name='test'),
+     url(r'^signup/', 'test', name='test'),
+     url(r'^question/(?P<id>\d+)/', 'question', name='question'),
+     url(r'^ask/', 'test', name='test'),
+     url(r'^popular/', 'popular', name='popular'),
+     url(r'^new/', 'test', name='test'),
 )
