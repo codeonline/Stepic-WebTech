@@ -19,7 +19,7 @@ class Question(models.Model):
     text = models.CharField(max_length=255)
     added_at = models.DateField(auto_now_add=True)
     rating = models.IntegerField(blank=True)
-    author = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User, related_name='likes')
 
     def get_url(self):
