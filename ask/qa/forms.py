@@ -73,7 +73,7 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
 	text = forms.CharField(label="Asnwer:", widget=forms.Textarea, required=True)
-	question = forms.CharField(widget=forms.HiddenInput, required=True)		
+	question = forms.IntegerField(widget=forms.HiddenInput, required=True)		
 		
 	def clean_text(self):
 		text = self.cleaned_data['text']
