@@ -5,3 +5,25 @@
         {{ answer.text }} <br>
     {% endfor %}
 </div>
+
+{% for e in answer_form.non_field_errors %}
+    <div class="alert alert-danger">{{ e }}</div>
+{% endfor %}
+{% for e in answer_form.errors %}
+    <div class="alert alert-danger">{{ e }}</div>
+{% endfor %}
+<form class="form-horizontal" method="post" action="/answer/">
+    {# {% csrf_token %} #}
+    {% csrf_token %}
+    <fieldset>
+        {%  for field in answer_form %}
+            <div class="control-group {% if field.errors %}has-error{% endif %}">
+                <label class="control-label">{{ field.label }}</label>
+                <div class="controls">{{ field }}</div>
+            </div>
+        {% endfor %}
+    </fieldset>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Answer</button>
+    </div>
+</form>

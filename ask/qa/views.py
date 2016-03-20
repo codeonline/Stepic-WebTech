@@ -5,9 +5,10 @@ from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator, EmptyPage
 #from ask.qa.models import *
 from qa.models import *
+from qa.forms import *
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 @require_GET
@@ -88,7 +89,48 @@ def popular(request):
 # В случае неправильного id вопроса view должна возвращать 404.
 @require_GET
 def question(request, id):
-    q = get_object_or_404(Question, pk=id)
+    q = get_object_or_404(Question, pk=id)    
+    answer_form = AnswerForm({'question':id})  
     return render(request, 'question.html', {
         'question': q,
+        'answer_form': answer_form,
     })
+
+
+# При GET запросе - отображается форма AskForm, 
+# при POST запросе форма должна создавать новый вопрос 
+# и перенаправлять на страницу вопроса - /question/123/
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'ask.html', {
+        'form': form,
+        })
+
+# При POST запросе форма AnswerForm добавляет новый ответ и 
+# перенаправляет на страницу вопроса /question/123/
+def answer(request):
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)        
+        #id = answer.question
+        id = request.POST.get('question')
+        if form.is_valid():
+            answer = form.save()
+            url = '/question/' + id
+            return HttpResponseRedirect(url)
+        else:
+            # return HttpResponse('Errors are: '+str(form.is_valid())+str(form.errors)+str(request.POST))
+            # return question(request, id) 
+            q = get_object_or_404(Question, pk=id)    
+            # answer_form = AnswerForm(request.POST)  
+            answer_form = form
+            return render(request, 'question.html', {
+                'question': q,
+                'answer_form': answer_form,
+            })                
