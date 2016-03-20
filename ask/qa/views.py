@@ -87,8 +87,10 @@ def popular(request):
 # На этой странице должны выводится заголовок (title), текст (text) вопроса и
 # все ответы на данный вопрос, без пагинации.
 # В случае неправильного id вопроса view должна возвращать 404.
-@require_GET
+#@require_GET
 def question(request, id):
+    if request.method == "POST":
+        return ask(request)
     q = get_object_or_404(Question, pk=id)    
     answer_form = AnswerForm({'question':id})  
     return render(request, 'question.html', {
