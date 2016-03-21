@@ -6,9 +6,10 @@ from django.core.paginator import Paginator, EmptyPage
 #from ask.qa.models import *
 from qa.models import *
 from qa.forms import *
+from django.contrib import auth
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 
 @require_GET
@@ -106,11 +107,12 @@ def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
+            form._user = request.user
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
-        form = AskForm()
+        form = AskForm()        
     return render(request, 'ask.html', {
         'form': form,
         })
@@ -123,6 +125,7 @@ def answer(request):
         #id = answer.question
         id = request.POST.get('question')
         if form.is_valid():
+            form._user = request.user
             answer = form.save()
             url = '/question/' + id
             return HttpResponseRedirect(url)
@@ -136,3 +139,75 @@ def answer(request):
                 'question': q,
                 'answer_form': answer_form,
             })                
+
+
+# username - имя пользователя, логин
+# email - email пользователя
+# password - пароль пользователя
+
+# При GET запросе должна отображаться форма для ввода данных, 
+# при POST запросе создается новый пользователей, 
+# осуществляется вход (login) созданного пользователя на сайт, в
+# озвращается редирект на главную страницу.
+def signup(request):
+    error = ''
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('main_page'))
+
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        password = request.POST.get('password')
+        url = request.POST.get('continue', reverse('main_page'))
+
+        userform = SignupForm(request.POST)
+        if userform.is_valid():
+           userform = userform.save() 
+           
+           # username = userform.cleaned_data['username']
+           # password = userform.cleaned_data['password']
+           user = auth.authenticate(username=name, password=password)
+           if user is not None:
+            auth.login(request, user)
+           return HttpResponseRedirect(url)
+    else:
+        userform = SignupForm()
+
+    return render(request, 'signup.html', {
+        'form': userform
+        })
+# username - имя пользователя
+# password - пароль пользователя
+
+# При GET запросе должна отображаться форма для ввода данных, 
+# при POST запросе происходит вход (login) на сайт, 
+# возвращается редирект на главную страницу. 
+# Имена POST параметров важны!
+def login(request):
+    if request.method == 'POST':
+        name = request.POST.get('username')
+        password = request.POST.get('password')
+        url = request.POST.get('continue', reverse('main_page'))
+
+        loginform = LoginForm(request.POST)        
+        if loginform.is_valid():
+           user = auth.authenticate(username=name, password=password)
+           if user is not None:
+            auth.login(request, user)
+            return HttpResponseRedirect(url)
+           else:
+            # loginform.add_error(None, 'User name or password is invalid')
+            loginform.errors['__all__'] = loginform.error_class(['User name or password is invalid'])
+    else:
+        loginform = LoginForm()
+
+    return render(request, 'login.html', {
+        'form': loginform,
+        })
+
+
+
+def logout(request):
+    if request.user.is_authenticated():
+        auth.logout(request)
+    url = request.GET.get('continue', reverse('main_page'))
+    return HttpResponseRedirect(url)

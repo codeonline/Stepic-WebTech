@@ -36,10 +36,11 @@
 # Для поддержки CSRF защиты - выведите в шаблонах форм {% csrf_token %}.
 from django import forms
 from qa.models import Question, Answer
+from django.contrib.auth.models import User
 
 class AskForm(forms.Form):
 	title = forms.CharField(label="Question title:", required=True)
-	text = forms.CharField(label="Question text:", widget=forms.Textarea, required=True)
+	text = forms.CharField(label="Question text:", widget=forms.Textarea, required=True)	
 
 	def clean_title(self):
 	 	title = self.cleaned_data['title']
@@ -54,22 +55,14 @@ class AskForm(forms.Form):
 	# 		raise forms.ValidationError(
 	# 			u'Empty text', code=1)
 	 	return text
-
-
-	# def clean(self):
 		
-
 	def save(self):
 		#question = Question(**self.cleaned_data)
 		title = self.cleaned_data['title']
 		text = self.cleaned_data['text']
-		question = Question(title=title, text=text)
+		question = Question(title=title, text=text, author=self._user)
 		question.save()
 		return question		
-
-
-
-
 
 class AnswerForm(forms.Form):
 	text = forms.CharField(label="Asnwer:", widget=forms.Textarea, required=True)
@@ -98,8 +91,24 @@ class AnswerForm(forms.Form):
 		data = {'text': self.cleaned_data['text'],
 				#'question': Question.objects.get(pk=question_id),
 				'question_id': int(question_id),
+				'author': self._user
 		}		
 		#answer = Answer(**self.cleaned_data)
 		answer = Answer(**data)
 		answer.save()
 		return answer	
+
+class SignupForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+		fields = ('username', 'password')
+
+	def save(self):
+		user = User.objects.create_user(**self.cleaned_data)
+		return user
+
+class LoginForm(forms.Form):
+
+	username = forms.CharField(required=True)
+	password = forms.CharField(widget=forms.PasswordInput, required=True)

@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login as auth_login
 #from qa.views import *
 
 #
@@ -15,9 +17,10 @@ urlpatterns = patterns('qa.views',
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'main_page', name='main_page'),
-     url(r'^login/', 'test', name='test'),
-     url(r'^signup/', 'test', name='test'),
+     url(r'^$', 'main_page', name='main_page'),
+     url(r'^login/', 'login', name='login'),     
+     url(r'^logout/', 'logout', name='logout'),     
+     url(r'^signup/', 'signup', name='signup'),     
      url(r'^question/(?P<id>\d+)/', 'question', name='question'),
      url(r'^ask/', 'ask', name='ask'),
      url(r'^popular/', 'popular', name='popular'),
