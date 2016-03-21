@@ -102,7 +102,7 @@ class SignupForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ('username', 'password')
+		fields = ('username', 'email', 'password')
 
 	def save(self):
 		user = User.objects.create_user(**self.cleaned_data)
